@@ -1,9 +1,12 @@
-﻿# From model output to a branded document
+﻿# Generate Word and PDF documents from LLM output in C#
 
 [![build](https://github.com/groupdocs-assembly/llm-json-to-branded-documents-net/actions/workflows/build.yml/badge.svg)](https://github.com/groupdocs-assembly/llm-json-to-branded-documents-net/actions/workflows/build.yml)
 [![NuGet](https://img.shields.io/nuget/v/GroupDocs.Assembly?label=GroupDocs.Assembly)](https://www.nuget.org/packages/GroupDocs.Assembly/)
 [![.NET](https://img.shields.io/badge/.NET-8.0%20%7C%2010.0-512bd4)](https://dotnet.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+**To generate a Word or PDF document from LLM output in C#, have the model return JSON against a
+JSON Schema, pass that schema to `JsonDataSource`, and let a Word template produce the document.**
 
 A language model is good at reading a document and bad at producing one. So let it do the first
 half: it returns **JSON**, and a Word template turns that JSON into the statement, the contract or
@@ -25,7 +28,7 @@ dotnet run --project src/LlmDocuments -- generate
 
 | Resource | What it adds |
 |---|---|
-| [Blog: From model output to a branded document](https://blog.groupdocs.com/assembly/llm-json-to-branded-documents-csharp/) | why the schema is the contract, and what breaks without it |
+| [Blog: Generate Word and PDF documents from LLM output in C#](https://blog.groupdocs.com/assembly/llm-json-to-branded-documents-csharp/) | why the schema is the contract, and what breaks without it |
 | [Docs: Generate documents from model output](https://docs.groupdocs.com/assembly/net/generate-documents-from-llm-output/) | the reference walk-through, step by step |
 | [This repository](https://github.com/groupdocs-assembly/llm-json-to-branded-documents-net) | the code that runs |
 
@@ -134,6 +137,26 @@ so the code on the documentation pages, in the examples and in this repository s
   ([temporary licence](https://purchase.groupdocs.com/temporary-license)).
 * **Frameworks.** The sample targets .NET 8. The package itself also builds for .NET Framework
   4.0 Client Profile, 4.6.2 and 4.8, .NET Standard 2.0, .NET 6 and .NET 10.
+
+## Common questions
+
+**How do I generate a Word document from LLM output in C#?**
+Ask the model for JSON matching a JSON Schema, build `new JsonDataSource(jsonPath, schemaPath)` and
+call `DocumentAssembler.AssembleDocument` with a `.docx` template.
+
+**Why does `"00042"` become 42 in the document?**
+Type inference from the data. Declare the field as `"type": "string"` in the schema.
+
+**What if the model leaves an optional field out?**
+With a schema the member is known and renders empty. Without one, see
+[data-safe-templates-net](https://github.com/groupdocs-assembly/data-safe-templates-net).
+
+**Can model output make the engine fetch a URL?**
+Yes, if the data carries one and the template renders it. This sample shows how to whitelist hosts
+or substitute a local image instead.
+
+**Does it work with any model provider?**
+Yes. The schema is the only contract; nothing in the template depends on the provider.
 
 ## Related samples
 
